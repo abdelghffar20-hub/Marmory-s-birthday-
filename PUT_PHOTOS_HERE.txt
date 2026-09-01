@@ -1,0 +1,1 @@
+Put your photos in this folder and name them photo01.jpg, photo02.jpg, photo03.jpg, photo04.jpg, photo05.jpg, photo06.jpg. If your photo files have different names or extensions, update the src in index.html. Under each photo, edit the text inside <figcaption>...</figcaption>.
