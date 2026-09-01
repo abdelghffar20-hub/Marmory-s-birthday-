@@ -2,6 +2,7 @@ const openBtn = document.getElementById("openBtn");
 const gift = document.getElementById("gift");
 const playBtn = document.getElementById("playBtn");
 const song = document.getElementById("song");
+const songStartTime = 95; // 1:35
 
 openBtn.addEventListener("click", () => {
   gift.scrollIntoView({ behavior: "smooth" });
@@ -11,6 +12,8 @@ openBtn.addEventListener("click", () => {
 playBtn.addEventListener("click", async () => {
   if (song.paused) {
     try {
+      // Start from 1:35 when the song is played for the first time or replayed from the beginning.
+      if (song.currentTime < songStartTime || song.currentTime === 0) song.currentTime = songStartTime;
       await song.play();
       playBtn.textContent = "❚❚";
     } catch (e) {

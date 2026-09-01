@@ -1,20 +1,6 @@
-MARWA BIRTHDAY GIFT WEBSITE
-
-Files:
-- index.html   Main page/content
-- style.css    Colors, layout, animations
-- script.js    Interactions + countdown + music button
-- images/      Put your photos here
-- music/       Put your legally obtained copy of Those Eyes here as:
-               music/those-eyes.mp3
-
-To add photos:
-1. Put your photos inside images/
-2. Open index.html
-3. Replace a placeholder such as:
-   <div class="photo placeholder"><span>Add photo 01</span></div>
-   with:
-   <div class="photo"><img src="images/photo1.jpg" alt="Memory"></div>
-
-The birthday date is set to September 6, 2026.
-All visible website copy is in English.
+HOW TO ADD PHOTOS AND CAPTIONS:
+1) Put your photos inside the images folder.
+2) Name them photo01.jpg through photo06.jpg (or change the names in index.html).
+3) Under each photo in index.html, change the text between <figcaption> and </figcaption>.
+4) The song is already included and starts from 1:35 when the Play button is pressed.
+5) After changing files, upload/replace them in your GitHub repository.

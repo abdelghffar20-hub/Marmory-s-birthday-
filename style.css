@@ -284,3 +284,43 @@ footer {
   .play-btn { margin-left: 0; }
   .timer div { min-width: 95px; }
 }
+
+
+/* Photo memories + captions */
+.photo-card {
+  margin: 0;
+  background: rgba(255,255,255,.65);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 14px 35px rgba(92, 116, 143, .12);
+}
+.photo-card img {
+  width: 100%;
+  height: 280px;
+  display: block;
+  object-fit: cover;
+}
+.photo-card .placeholder {
+  height: 280px;
+  min-height: 0;
+}
+.tall-card img, .tall-card .placeholder { height: 420px; }
+.wide-card { grid-column: span 2; }
+.wide-card img, .wide-card .placeholder { height: 300px; }
+.photo-card figcaption {
+  padding: 15px 16px 18px;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  line-height: 1.6;
+  color: #6d5364;
+}
+.birthday-message p {
+  line-height: 1.9;
+  margin: 0 0 18px;
+}
+@media (max-width: 700px) {
+  .wide-card { grid-column: span 1; }
+  .photo-card img, .tall-card img, .wide-card img,
+  .photo-card .placeholder, .tall-card .placeholder, .wide-card .placeholder { height: 300px; }
+}
