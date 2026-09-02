@@ -8,31 +8,58 @@ openBtn.addEventListener("click", async () => {
   gift.scrollIntoView({ behavior: "smooth" });
   burstHearts();
 
-  // Automatically start the song from 1:35 when Open Your Gift is pressed.
+  // Start the song at exactly 1:35 from the same user tap.
   try {
+    if (song.readyState < 1) {
+      await new Promise((resolve, reject) => {
+        const onLoaded = () => { cleanup(); resolve(); };
+        const onError = () => { cleanup(); reject(new Error("Audio file could not be loaded.")); };
+        const cleanup = () => {
+          song.removeEventListener("loadedmetadata", onLoaded);
+          song.removeEventListener("error", onError);
+        };
+        song.addEventListener("loadedmetadata", onLoaded, { once: true });
+        song.addEventListener("error", onError, { once: true });
+        song.load();
+      });
+    }
     song.currentTime = songStartTime;
     await song.play();
     playBtn.textContent = "❚❚";
   } catch (e) {
-    // Browser playback restrictions may prevent autoplay; the Play button remains available.
+    console.error("Audio playback failed:", e);
     playBtn.textContent = "▶";
   }
 });
 
 playBtn.addEventListener("click", async () => {
-  if (song.paused) {
-    try {
+  try {
+    if (song.paused) {
+      if (song.readyState < 1) {
+        await new Promise((resolve, reject) => {
+          const onLoaded = () => { cleanup(); resolve(); };
+          const onError = () => { cleanup(); reject(new Error("Audio file could not be loaded.")); };
+          const cleanup = () => {
+            song.removeEventListener("loadedmetadata", onLoaded);
+            song.removeEventListener("error", onError);
+          };
+          song.addEventListener("loadedmetadata", onLoaded, { once: true });
+          song.addEventListener("error", onError, { once: true });
+          song.load();
+        });
+      }
       if (song.currentTime < songStartTime || song.currentTime === 0) {
         song.currentTime = songStartTime;
       }
       await song.play();
       playBtn.textContent = "❚❚";
-    } catch (e) {
-      alert("Please add those-eyes.mp3 first.");
+    } else {
+      song.pause();
+      playBtn.textContent = "▶";
     }
-  } else {
-    song.pause();
-    playBtn.textContent = "▶";
+  } catch (e) {
+    console.error("Audio playback failed:", e);
+    alert("The song could not be loaded. Make sure those-eyes.mp3 is in the same folder as index.html on GitHub.");
   }
 });
 
