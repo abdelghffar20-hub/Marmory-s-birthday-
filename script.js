@@ -8,25 +8,27 @@ openBtn.addEventListener("click", async () => {
   gift.scrollIntoView({ behavior: "smooth" });
   burstHearts();
 
-  // Start the song at 1:35 as soon as "Open Your Gift" is pressed.
+  // Automatically start the song from 1:35 when Open Your Gift is pressed.
   try {
-    song.currentTime = 95;
+    song.currentTime = songStartTime;
     await song.play();
     playBtn.textContent = "❚❚";
   } catch (e) {
-    // Some browsers may still block playback; the Play button remains available.
+    // Browser playback restrictions may prevent autoplay; the Play button remains available.
+    playBtn.textContent = "▶";
   }
 });
 
 playBtn.addEventListener("click", async () => {
   if (song.paused) {
     try {
-      // Start from 1:35 when the song is played for the first time or replayed from the beginning.
-      if (song.currentTime < songStartTime || song.currentTime === 0) song.currentTime = songStartTime;
+      if (song.currentTime < songStartTime || song.currentTime === 0) {
+        song.currentTime = songStartTime;
+      }
       await song.play();
       playBtn.textContent = "❚❚";
     } catch (e) {
-      alert("Please add music/those-eyes.mp3 first.");
+      alert("Please add those-eyes.mp3 first.");
     }
   } else {
     song.pause();
