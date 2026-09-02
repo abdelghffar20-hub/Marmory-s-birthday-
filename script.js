@@ -4,62 +4,32 @@ const playBtn = document.getElementById("playBtn");
 const song = document.getElementById("song");
 const songStartTime = 95; // 1:35
 
-openBtn.addEventListener("click", async () => {
+openBtn.addEventListener("click", () => {
   gift.scrollIntoView({ behavior: "smooth" });
   burstHearts();
 
-  // Start the song at exactly 1:35 from the same user tap.
-  try {
-    if (song.readyState < 1) {
-      await new Promise((resolve, reject) => {
-        const onLoaded = () => { cleanup(); resolve(); };
-        const onError = () => { cleanup(); reject(new Error("Audio file could not be loaded.")); };
-        const cleanup = () => {
-          song.removeEventListener("loadedmetadata", onLoaded);
-          song.removeEventListener("error", onError);
-        };
-        song.addEventListener("loadedmetadata", onLoaded, { once: true });
-        song.addEventListener("error", onError, { once: true });
-        song.load();
-      });
-    }
-    song.currentTime = songStartTime;
-    await song.play();
+  // Play automatically from 1:35 because this runs directly from the user's tap.
+  song.currentTime = songStartTime;
+  song.play().then(() => {
     playBtn.textContent = "❚❚";
-  } catch (e) {
-    console.error("Audio playback failed:", e);
-    playBtn.textContent = "▶";
-  }
+  }).catch((error) => {
+    console.error("Audio playback failed:", error);
+  });
 });
 
-playBtn.addEventListener("click", async () => {
-  try {
-    if (song.paused) {
-      if (song.readyState < 1) {
-        await new Promise((resolve, reject) => {
-          const onLoaded = () => { cleanup(); resolve(); };
-          const onError = () => { cleanup(); reject(new Error("Audio file could not be loaded.")); };
-          const cleanup = () => {
-            song.removeEventListener("loadedmetadata", onLoaded);
-            song.removeEventListener("error", onError);
-          };
-          song.addEventListener("loadedmetadata", onLoaded, { once: true });
-          song.addEventListener("error", onError, { once: true });
-          song.load();
-        });
-      }
-      if (song.currentTime < songStartTime || song.currentTime === 0) {
-        song.currentTime = songStartTime;
-      }
-      await song.play();
-      playBtn.textContent = "❚❚";
-    } else {
-      song.pause();
-      playBtn.textContent = "▶";
+playBtn.addEventListener("click", () => {
+  if (song.paused) {
+    if (song.currentTime < songStartTime) {
+      song.currentTime = songStartTime;
     }
-  } catch (e) {
-    console.error("Audio playback failed:", e);
-    alert("The song could not be loaded. Make sure those-eyes.mp3 is in the same folder as index.html on GitHub.");
+    song.play().then(() => {
+      playBtn.textContent = "❚❚";
+    }).catch((error) => {
+      console.error("Audio playback failed:", error);
+    });
+  } else {
+    song.pause();
+    playBtn.textContent = "▶";
   }
 });
 
@@ -72,7 +42,6 @@ const target = new Date("2026-09-06T00:00:00");
 function updateCountdown() {
   const now = new Date();
   let diff = target - now;
-
   if (diff < 0) diff = 0;
 
   const days = Math.floor(diff / 86400000);
@@ -85,6 +54,7 @@ function updateCountdown() {
   document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
   document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
 }
+
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
@@ -97,23 +67,16 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
 function burstHearts() {
-  const symbols = ["♡", "♥", "💗", "💙"];
+  const container = document.querySelector(".hearts");
   for (let i = 0; i < 18; i++) {
-    setTimeout(() => createHeart(symbols[Math.floor(Math.random() * symbols.length)]), i * 90);
+    const heart = document.createElement("span");
+    heart.textContent = ["♡", "♥", "❤"][Math.floor(Math.random() * 3)];
+    heart.style.left = (45 + Math.random() * 10) + "%";
+    heart.style.top = (50 + Math.random() * 10) + "%";
+    heart.style.setProperty("--x", ((Math.random() - 0.5) * 300) + "px");
+    heart.style.setProperty("--y", (-(100 + Math.random() * 300)) + "px");
+    heart.style.animationDelay = (Math.random() * 0.2) + "s";
+    container.appendChild(heart);
+    setTimeout(() => heart.remove(), 1800);
   }
 }
-
-function createHeart(symbol) {
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.textContent = symbol;
-  h.style.left = Math.random() * 100 + "vw";
-  h.style.animationDuration = (4 + Math.random() * 4) + "s";
-  h.style.fontSize = (14 + Math.random() * 16) + "px";
-  document.body.appendChild(h);
-  setTimeout(() => h.remove(), 9000);
-}
-
-setInterval(() => {
-  if (Math.random() > 0.45) createHeart("♡");
-}, 1800);
