@@ -296,20 +296,25 @@ footer {
 }
 .photo-card img {
   width: 100%;
-  aspect-ratio: 1242 / 2208;
   height: auto;
+  aspect-ratio: 1242 / 2208;
   display: block;
-  object-fit: contain;
-  background: #fff;
+  object-fit: cover;
 }
 .photo-card .placeholder {
   aspect-ratio: 1242 / 2208;
   height: auto;
   min-height: 0;
 }
-.tall-card img, .tall-card .placeholder { height: auto; }
+.tall-card img, .tall-card .placeholder {
+  height: auto;
+  aspect-ratio: 1242 / 2208;
+}
 .wide-card { grid-column: span 2; }
-.wide-card img, .wide-card .placeholder { height: auto; }
+.wide-card img, .wide-card .placeholder {
+  height: auto;
+  aspect-ratio: 1242 / 2208;
+}
 .photo-card figcaption {
   padding: 15px 16px 18px;
   text-align: center;
