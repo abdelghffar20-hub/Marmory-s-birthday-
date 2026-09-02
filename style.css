@@ -313,17 +313,13 @@ footer {
   object-fit: cover;
 }
 .photo-card .placeholder {
-  width: 100%;
   aspect-ratio: 1242 / 2208;
   height: auto;
   min-height: 0;
 }
-.tall-card img, .tall-card .placeholder,
-.wide-card img, .wide-card .placeholder {
-  aspect-ratio: 1242 / 2208;
-  height: auto;
-}
+.tall-card img, .tall-card .placeholder { height: auto; }
 .wide-card { grid-column: span 2; }
+.wide-card img, .wide-card .placeholder { height: auto; }
 .photo-card figcaption {
   padding: 15px 16px 18px;
   text-align: center;
@@ -339,14 +335,5 @@ footer {
 @media (max-width: 700px) {
   .wide-card { grid-column: span 1; }
   .photo-card img, .tall-card img, .wide-card img,
-  .photo-card .placeholder, .tall-card .placeholder, .wide-card .placeholder { height: 300px; }
-}
-
-
-/* Photo card ratio requested: 1242 x 2208 */
-.photo-card img, .photo-card .placeholder,
-.tall-card img, .tall-card .placeholder,
-.wide-card img, .wide-card .placeholder {
-  aspect-ratio: 1242 / 2208;
-  height: auto;
+  .photo-card .placeholder, .tall-card .placeholder, .wide-card .placeholder { height: auto; }
 }
