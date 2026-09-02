@@ -4,29 +4,32 @@ const playBtn = document.getElementById("playBtn");
 const song = document.getElementById("song");
 const songStartTime = 95; // 1:35
 
-openBtn.addEventListener("click", () => {
+openBtn.addEventListener("click", async () => {
   gift.scrollIntoView({ behavior: "smooth" });
   burstHearts();
 
-  // Play automatically from 1:35 because this runs directly from the user's tap.
-  song.currentTime = songStartTime;
-  song.play().then(() => {
+  // Automatically start the song from 1:35 when Open Your Gift is pressed.
+  try {
+    song.currentTime = songStartTime;
+    await song.play();
     playBtn.textContent = "❚❚";
-  }).catch((error) => {
-    console.error("Audio playback failed:", error);
-  });
+  } catch (e) {
+    // Browser playback restrictions may prevent autoplay; the Play button remains available.
+    playBtn.textContent = "▶";
+  }
 });
 
-playBtn.addEventListener("click", () => {
+playBtn.addEventListener("click", async () => {
   if (song.paused) {
-    if (song.currentTime < songStartTime) {
-      song.currentTime = songStartTime;
-    }
-    song.play().then(() => {
+    try {
+      if (song.currentTime < songStartTime || song.currentTime === 0) {
+        song.currentTime = songStartTime;
+      }
+      await song.play();
       playBtn.textContent = "❚❚";
-    }).catch((error) => {
-      console.error("Audio playback failed:", error);
-    });
+    } catch (e) {
+      alert("Please add those-eyes.mp3 first.");
+    }
   } else {
     song.pause();
     playBtn.textContent = "▶";
@@ -42,6 +45,7 @@ const target = new Date("2026-09-06T00:00:00");
 function updateCountdown() {
   const now = new Date();
   let diff = target - now;
+
   if (diff < 0) diff = 0;
 
   const days = Math.floor(diff / 86400000);
@@ -54,7 +58,6 @@ function updateCountdown() {
   document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
   document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
 }
-
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
@@ -67,16 +70,23 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
 function burstHearts() {
-  const container = document.querySelector(".hearts");
+  const symbols = ["♡", "♥", "💗", "💙"];
   for (let i = 0; i < 18; i++) {
-    const heart = document.createElement("span");
-    heart.textContent = ["♡", "♥", "❤"][Math.floor(Math.random() * 3)];
-    heart.style.left = (45 + Math.random() * 10) + "%";
-    heart.style.top = (50 + Math.random() * 10) + "%";
-    heart.style.setProperty("--x", ((Math.random() - 0.5) * 300) + "px");
-    heart.style.setProperty("--y", (-(100 + Math.random() * 300)) + "px");
-    heart.style.animationDelay = (Math.random() * 0.2) + "s";
-    container.appendChild(heart);
-    setTimeout(() => heart.remove(), 1800);
+    setTimeout(() => createHeart(symbols[Math.floor(Math.random() * symbols.length)]), i * 90);
   }
 }
+
+function createHeart(symbol) {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.textContent = symbol;
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.animationDuration = (4 + Math.random() * 4) + "s";
+  h.style.fontSize = (14 + Math.random() * 16) + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 9000);
+}
+
+setInterval(() => {
+  if (Math.random() > 0.45) createHeart("♡");
+}, 1800);
