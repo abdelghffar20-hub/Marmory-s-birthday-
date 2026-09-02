@@ -113,6 +113,11 @@ h1 span {
 }
 
 .photo-grid {
+  width: min(100%, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+  grid-auto-rows: auto;
+
   display: grid;
   grid-template-columns: 1.1fr .9fr;
   gap: 18px;
@@ -276,7 +281,12 @@ footer {
   .hero { padding: 16px; }
   .hero-card { padding: 55px 22px; border-radius: 28px; }
   .content { padding-top: 75px; }
-  .photo-grid { grid-template-columns: 1fr; }
+  .photo-grid {
+  width: min(100%, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+  grid-auto-rows: auto;
+ grid-template-columns: 1fr; }
   .photo.tall { min-height: 350px; }
   .photo.wide { grid-column: auto; }
   .letter-card { padding: 38px 25px; }
@@ -288,6 +298,8 @@ footer {
 
 /* Photo memories + captions */
 .photo-card {
+  min-width: 0;
+
   margin: 0;
   background: rgba(255,255,255,.65);
   border-radius: 22px;
