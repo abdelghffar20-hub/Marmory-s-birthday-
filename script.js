@@ -8,13 +8,13 @@ openBtn.addEventListener("click", async () => {
   gift.scrollIntoView({ behavior: "smooth" });
   burstHearts();
 
-  // Start the song automatically from 1:35 when "Open Your Gift" is pressed.
+  // Start the song at 1:35 as soon as "Open Your Gift" is pressed.
   try {
-    song.currentTime = songStartTime;
+    song.currentTime = 95;
     await song.play();
     playBtn.textContent = "❚❚";
   } catch (e) {
-    // If the browser blocks playback, the Play button remains available.
+    // Some browsers may still block playback; the Play button remains available.
   }
 });
 
