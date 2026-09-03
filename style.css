@@ -289,7 +289,8 @@ footer {
 /* Photo memories + captions */
 .photo-card {
   margin: 0;
-  background: rgba(255,255,255,.65);
+  padding: 10px 10px 0;
+  background: rgba(255,255,255,.75);
   border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 14px 35px rgba(92, 116, 143, .12);
@@ -297,9 +298,9 @@ footer {
 .photo-card img {
   width: 100%;
   height: auto;
-  aspect-ratio: 1242 / 2208;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  border-radius: 15px;
 }
 .photo-card .placeholder {
   aspect-ratio: 1242 / 2208;
