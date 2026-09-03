@@ -88,7 +88,7 @@ h1 span {
 .open-btn:hover, .play-btn:hover { transform: translateY(-3px); }
 
 .content {
-  max-width: 1050px;
+  max-width: 1300px;
   margin: auto;
   padding: 100px 25px 35px;
 }
@@ -328,7 +328,12 @@ footer {
   margin: 0 0 18px;
 }
 @media (max-width: 700px) {
-  .wide-card { grid-column: span 1; }
-  .photo-card img, .tall-card img, .wide-card img,
-  .photo-card .placeholder, .tall-card .placeholder, .wide-card .placeholder { height: 300px; }
+  .photo-card img,
+  .tall-card img,
+  .wide-card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+  }
 }
