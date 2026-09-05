@@ -302,20 +302,6 @@ footer {
   object-fit: contain;
   border-radius: 15px;
 }
-.photo-card .placeholder {
-  aspect-ratio: 1242 / 2208;
-  height: auto;
-  min-height: 0;
-}
-.tall-card img, .tall-card .placeholder {
-  height: auto;
-  aspect-ratio: 1242 / 2208;
-}
-.wide-card { grid-column: span 2; }
-.wide-card img, .wide-card .placeholder {
-  height: auto;
-  aspect-ratio: 1242 / 2208;
-}
 .photo-card figcaption {
   padding: 15px 16px 18px;
   text-align: center;
